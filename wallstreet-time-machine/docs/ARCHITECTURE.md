@@ -1,5 +1,7 @@
 # Architecture
 
+The identity presentation resolver is a pure layer above campaign metadata. It accepts public era IDs and visual state only; it cannot access future events, prices, outcomes, or trading services.
+
 The pure `identity` domain owns profiles, catalogs, bounded loadouts, presentation preferences, reactions, migration defaults, and legacy derivation. React identity screens consume these services without changing the market engine.
 
 The Agent Layer (`src/game/agents`) sits above the Intelligence Layer. It consumes only immutable, date-filtered `AgentContext` values and returns analyses; it has no trading or episode-data dependency. Campaign persistence stores bounded analysis and signal history.

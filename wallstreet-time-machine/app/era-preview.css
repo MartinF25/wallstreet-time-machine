@@ -1,0 +1,2 @@
+.era-preview-tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:.7rem 0}.era-preview-tabs button[aria-pressed=true]{border-color:#e9be69;color:#e9be69}
+.era-look-unlock{display:grid;place-items:center;gap:.5rem;margin:1rem auto;animation:era-look-in 1.1s ease}.era-look-unlock span{color:#e9be69;letter-spacing:.12em}.era-look-unlock.no-motion{animation:none}@keyframes era-look-in{from{opacity:.2;transform:scale(.97)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.era-look-unlock{animation:none}}

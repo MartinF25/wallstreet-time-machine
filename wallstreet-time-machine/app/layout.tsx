@@ -9,6 +9,8 @@ import "./intelligence.css";
 import "./agents.css";
 import "./identity.css";
 import "./identity-overrides.css";
+import "./era-identity.css";
+import "./era-preview.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

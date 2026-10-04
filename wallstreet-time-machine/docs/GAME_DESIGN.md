@@ -1,5 +1,7 @@
 # Game Design
 
+Character evolution is a visual record of the journey. The time machine preserves the investor while each historical world changes around them.
+
 Investor identity changes how known information is organized and explained. It never changes history, market prices, objective agent signals, or returns.
 
 Analyst desks interpret available information without deciding for the player. Conflicting readings are intentional gameplay: confidence, evidence, signal decay, and disagreement make uncertainty visible.

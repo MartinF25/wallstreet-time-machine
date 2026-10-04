@@ -7,3 +7,7 @@ The UI receives only the current market state. `getVisibleMarketData`, `getAvail
 ## Sprint 2 campaign layer
 
 The campaign layer sits above the episode engine. Era metadata is separate from playable episode content to prevent future information leakage. The shared engine resolves its episode through `EPISODE_REGISTRY`, while career, challenge, progression, and v3 persistence services orchestrate long-term play.
+
+## Presentation layer
+
+`src/game/feel` consumes completed engine output and never drives calculation timing. The client persists the next `GameState` before creating a transient reveal sequence, so skip, navigation, or reload cannot execute a round twice.

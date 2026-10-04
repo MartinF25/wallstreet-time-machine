@@ -16,3 +16,7 @@ All market prices are fictional and carry a `SIMULATED DATA` label. Reports are 
 ## Campaign and career
 
 Sprint 2 expands the original Great Crash scenario into an 18-era career timeline. Panic of 1907, The Great Crash, and Oil Shock are playable as standalone episodes and through available career or challenge entries. Saves now use a version 3 archive with automatic import of the version 2 Great Crash save.
+
+## Cinematic game feel
+
+Rounds now reveal date, market moves, new reports, historical events, portfolio impact, and risk in sequence. Persistent settings control animation speed, reduced motion, overlays, ticker motion, and optional synthesized audio.

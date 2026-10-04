@@ -7,3 +7,7 @@ Prices are deterministic simulations. Events are curated as historical; headline
 ## Long-term play
 
 Career play begins in 1900 with USD 100,000 and advances sequentially through 18 eras. Results award a score, grade, and XP. Crisis windows temporarily increase round frequency, so normal monthly or weekly decisions can become daily during acute events.
+
+## Round experience
+
+A round is presented as a compact historical sequence. Market Heat, tickers, period themes, Decisions, and Micro Missions explain current conditions and player consequences without forecasting or choosing trades.

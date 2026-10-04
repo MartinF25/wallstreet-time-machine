@@ -1,5 +1,7 @@
 # Architecture
 
+The pure `identity` domain owns profiles, catalogs, bounded loadouts, presentation preferences, reactions, migration defaults, and legacy derivation. React identity screens consume these services without changing the market engine.
+
 The Agent Layer (`src/game/agents`) sits above the Intelligence Layer. It consumes only immutable, date-filtered `AgentContext` values and returns analyses; it has no trading or episode-data dependency. Campaign persistence stores bounded analysis and signal history.
 
 The application uses Next.js 16, React 19, TypeScript, and Tailwind CSS. `src/game` contains pure domain logic with no React dependency. `engine` owns state transitions; `market` produces deterministic prices; `trading` validates and executes orders; `portfolio` calculates valuation and drawdown; `episodes` contains configuration; and `persistence` is the only browser-storage boundary.

@@ -1,5 +1,7 @@
 # Savegame Schema
 
+Sprint 4.5 extends v3 with `investorProfile`, `characterHistory`, and optional `investorLegacy`. Existing careers receive a pending setup profile during migration; their financial and campaign state remains untouched.
+
 Schema v3 now defaults and migrates `agentSettings`, `agentAnalyses`, `agentSignalHistory`, `agentDisagreements`, and `agentMemory`. Analysis and signal collections are bounded; each desk retains at most 20 prior analyses in memory.
 
 Browser storage key: `wallstreet-time-machine:save:v3`. The former v2 key is read as a migration source.

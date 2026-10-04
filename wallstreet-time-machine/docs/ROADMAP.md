@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Sprint 4.5: investor identity, avatars, archetypes, perks, mentors, reactions, and legacy
+
 - [x] Sprint 4: deterministic analyst agents, signal intelligence, disagreement, memory, and risk scenarios
 
 - **Foundation — DONE:** deterministic game loop, trading, portfolio, persistence.

@@ -1,5 +1,7 @@
 # Wall Street: Time Machine
 
+Sprint 4.5 adds investor identity, accessible avatar selection, ten information-focused archetypes, traits, perks, mentors, reactions, and behavior-based legacy progression.
+
 Sprint 4 adds six deterministic analyst desks, signal-versus-noise classification, consensus and disagreement, bounded agent memory, and non-mutating portfolio stress scenarios. See [docs/SPRINT_04_REPORT.md](docs/SPRINT_04_REPORT.md).
 
 A turn-based historical market strategy game. **The Great Crash (1928–1933)** combines deterministic simulated prices with curated historical events, reconstructed period reports, strategy profiles, risk monitoring, weekly briefings, objectives, and a benchmark.

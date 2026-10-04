@@ -7,6 +7,8 @@ import "./campaign.css";
 import "./feel.css";
 import "./intelligence.css";
 import "./agents.css";
+import "./identity.css";
+import "./identity-overrides.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

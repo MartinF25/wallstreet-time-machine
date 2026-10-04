@@ -1,15 +1,4 @@
-import type { GameState } from "../types";
-import { GameStateSchema } from "../validation";
-
-const KEY = "wallstreet-time-machine:save:v1";
-export function isGameState(value: unknown): value is GameState {
-  return GameStateSchema.safeParse(value).success;
-}
-export function migrateSavegame(value: unknown): GameState { if (!isGameState(value)) throw new Error("Savegame is invalid or unsupported"); return value; }
-export function saveGame(state: GameState) { localStorage.setItem(KEY, JSON.stringify({ schemaVersion: 1, gameState: state })); }
-export function loadGame(): GameState | null {
-  const raw = localStorage.getItem(KEY); if (!raw) return null;
-  try { const parsed = JSON.parse(raw) as { gameState?: unknown }; return migrateSavegame(parsed.gameState); } catch { return null; }
-}
-export function deleteGame() { localStorage.removeItem(KEY); }
-export function hasSavedGame() { return localStorage.getItem(KEY) !== null; }
+import{GREAT_CRASH}from"../episodes/prologue";import{createStrategy}from"../strategy/service";import type{GameState}from"../types";import{GameStateSchema}from"../validation";import{getMarketRegime,getMarketSentiment}from"../intelligence/service";
+const KEY="wallstreet-time-machine:save:v2",OLD_KEY="wallstreet-time-machine:save:v1";export const isGameState=(v:unknown):v is GameState=>GameStateSchema.safeParse(v).success;
+export function migrateSavegame(value:unknown):GameState{if(isGameState(value))return value;if(!value||typeof value!=="object")throw new Error("Invalid savegame");const v=value as Record<string,unknown>;if(v.schemaVersion!==1)throw new Error("Unsupported savegame");const date=String(v.currentDate),regime=getMarketRegime(date),history=(v.portfolioHistory as Record<string,unknown>[]??[]).map(x=>{const portfolioValue=Number(x.portfolioValue),cash=Number(x.cash);return{date:String(x.date),roundNumber:Number(x.roundNumber),portfolioValue,cash,benchmarkValue:portfolioValue,cashAllocation:portfolioValue?cash/portfolioValue*100:0,equityAllocation:portfolioValue?(portfolioValue-cash)/portfolioValue*100:0}});return{...(v as unknown as GameState),schemaVersion:2,episodeId:"great-crash",feesPaid:(v.tradeHistory as{fee?:number}[]??[]).reduce((n,t)=>n+(t.fee??0),0),portfolioHistory:history,marketState:{...(v.marketState as GameState["marketState"]),regime:regime.internalRegime,regimeLabel:regime.displayLabel,sentiment:getMarketSentiment(date)},strategyProfile:createStrategy(),strategyHistory:[],riskAlerts:[],seenEvents:[],seenNews:[],objectives:GREAT_CRASH.objectives.map(o=>({...o})),lastBriefing:undefined}}
+export function saveGame(s:GameState){localStorage.setItem(KEY,JSON.stringify({schemaVersion:2,gameState:s}));localStorage.removeItem(OLD_KEY)}export function loadGame():GameState|null{const raw=localStorage.getItem(KEY)??localStorage.getItem(OLD_KEY);if(!raw)return null;try{const p=JSON.parse(raw)as{gameState?:unknown};const s=migrateSavegame(p.gameState);saveGame(s);return s}catch{return null}}export function deleteGame(){localStorage.removeItem(KEY);localStorage.removeItem(OLD_KEY)}export function hasSavedGame(){return localStorage.getItem(KEY)!==null||localStorage.getItem(OLD_KEY)!==null}

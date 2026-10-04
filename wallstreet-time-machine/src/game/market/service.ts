@@ -23,7 +23,11 @@ export function priceFor(assetId: string, round: number, seed: number): number {
   for (let i = 1; i <= round; i += 1) {
     const shock = (hash(seed, i, index) - 0.5) * (assetId === "banking" ? 0.065 : 0.045);
     const cycle = Math.sin((i + index * 2) / 7) * 0.006;
-    price *= 1 + DRIFT[assetId] + shock + cycle;
+    const crash = i >= 91 && i <= 105 && ["industrials","banking","railroads"].includes(assetId) ? -0.025 : 0;
+    const depression = i > 105 && i < 240 && ["industrials","banking","railroads"].includes(assetId) ? -0.0015 : 0;
+    const recovery = i >= 261 && ["industrials","banking","railroads"].includes(assetId) ? 0.003 : 0;
+    const safety = i >= 91 && ["gold","bonds"].includes(assetId) ? 0.0008 : 0;
+    price *= 1 + DRIFT[assetId] + shock + cycle + crash + depression + recovery + safety;
   }
   return Number(Math.max(1, price).toFixed(2));
 }

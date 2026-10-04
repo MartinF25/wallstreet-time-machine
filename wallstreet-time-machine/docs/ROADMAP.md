@@ -1,7 +1,8 @@
 # Roadmap
 
-1. **Core Game Expansion:** full Great Crash episode, events, early news, strategy profiles, expanded bonds and commodities.
-2. **Campaign & Era Engine:** career mode, eras, unlocks, challenges, XP, achievements.
-3. **Intelligence Foundation:** news, indicators, publication delays, Fog of History, briefings.
-4. **Agents & Signal vs Noise:** market, macro, risk, and news agents with evidence and disagreement.
-5. **Historical Data & Sources:** verified datasets, imports, provenance, validation.
+- **Foundation — DONE:** deterministic game loop, trading, portfolio, persistence.
+- **Sprint 1 — DONE:** Great Crash, events, reconstructed news, strategy, risk, briefings, objectives, benchmark.
+- **Sprint 2:** Campaign and Era Engine, career progression, unlocks, challenges, achievements.
+- **Sprint 3:** Intelligence Foundation, indicators, publication delays, research.
+- **Sprint 4:** Agents and Signal vs Noise.
+- **Sprint 5:** Historical Data and Sources, imports, provenance, validation.

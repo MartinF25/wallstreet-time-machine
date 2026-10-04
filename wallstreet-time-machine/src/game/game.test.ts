@@ -53,7 +53,7 @@ describe("game foundation", () => {
   });
 
   it("completes at the episode boundary", () => {
-    const game = { ...startGame(createNewGame()), currentDate: "1929-12-30", roundNumber: 103 };
+    const game = { ...startGame(createNewGame()), currentDate: "1933-12-30", roundNumber: 312 };
     expect(advanceRound(game).state.status).toBe("COMPLETED");
   });
 });

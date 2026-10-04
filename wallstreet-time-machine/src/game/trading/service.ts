@@ -7,7 +7,7 @@ import { TradeInputSchema } from "../validation";
 export const TRADING_FEE_RATE = 0.0025;
 export const calculateTradingFee = (gross: number) => gross * TRADING_FEE_RATE;
 
-export function executeTrade(state: GameState, side: TradeSide, assetId: string, quantity: number): GameState {
+export function executeTrade(state: GameState, side: TradeSide, assetId: string, quantity: number, reason?: string, note?: string): GameState {
   const parsed = TradeInputSchema.safeParse({ side, assetId, quantity });
   if (!parsed.success) throw new Error("Quantity must be greater than zero");
   if (!ASSETS.some((asset) => asset.id === assetId)) throw new Error("Unknown asset");
@@ -29,6 +29,6 @@ export function executeTrade(state: GameState, side: TradeSide, assetId: string,
     const old = positions[index]; cash += grossValue - fee; realizedPnL += (price - old.averageBuyPrice) * quantity - fee;
     old.quantity -= quantity; if (old.quantity < 1e-8) positions.splice(index, 1);
   }
-  const trade: Trade = { id: `${state.gameId}-${state.tradeHistory.length + 1}`, date: state.currentDate, roundNumber: state.roundNumber, assetId, side, quantity, price, grossValue, fee, netValue: side === "BUY" ? grossValue + fee : grossValue - fee };
-  return recalculateGameState({ ...state, cash, positions, realizedPnL, tradeHistory: [...state.tradeHistory, trade] });
+  const trade: Trade = { id: `${state.gameId}-${state.tradeHistory.length + 1}`, date: state.currentDate, roundNumber: state.roundNumber, assetId, side, quantity, price, grossValue, fee, netValue: side === "BUY" ? grossValue + fee : grossValue - fee, reason, note };
+  return recalculateGameState({ ...state, cash, positions, realizedPnL, feesPaid: state.feesPaid + fee, tradeHistory: [...state.tradeHistory, trade] });
 }

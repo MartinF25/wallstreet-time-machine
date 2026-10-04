@@ -1,43 +1,10 @@
-export type ISODate = string;
-export type GameStatus = "NOT_STARTED" | "RUNNING" | "COMPLETED";
-export type AssetClass = "EQUITY" | "COMMODITY" | "BOND" | "FOREX" | "CASH";
-export type DataType = "SIMULATED" | "HISTORICAL";
-export type TradeSide = "BUY" | "SELL";
-
-export interface Asset {
-  id: string; symbol: string; name: string; assetClass: AssetClass; sector: string;
-  quoteCurrency: string; priceUnit: string; description: string;
-  availableFrom: ISODate; availableUntil?: ISODate;
-}
-
-export interface MarketDataPoint { assetId: string; date: ISODate; price: number; dataType: DataType }
-export interface Episode {
-  id: string; name: string; subtitle: string; startDate: ISODate; endDate: ISODate;
-  startingCapital: number; baseCurrency: string; roundGranularity: "WEEK";
-  description: string; availableAssets: string[]; dataType: DataType;
-}
-export interface Position {
-  assetId: string; quantity: number; averageBuyPrice: number; currentPrice: number;
-  marketValue: number; unrealizedPnL: number; unrealizedPnLPercent: number;
-}
-export interface Trade {
-  id: string; date: ISODate; roundNumber: number; assetId: string; side: TradeSide;
-  quantity: number; price: number; grossValue: number; fee: number; netValue: number;
-}
-export interface PortfolioSnapshot {
-  date: ISODate; roundNumber: number; portfolioValue: number; cash: number;
-}
-export interface MarketState { prices: Record<string, number>; previousPrices: Record<string, number> }
-export interface GameState {
-  schemaVersion: 1; gameId: string; seed: number; episodeId: string; status: GameStatus;
-  currentDate: ISODate; roundNumber: number; baseCurrency: string; cash: number;
-  positions: Position[]; portfolioValue: number; startingCapital: number;
-  realizedPnL: number; unrealizedPnL: number; totalReturn: number; maxDrawdown: number;
-  tradeHistory: Trade[]; portfolioHistory: PortfolioSnapshot[]; marketState: MarketState;
-  createdAt: string; updatedAt: string;
-}
-export interface GameSettings { tradingFeeRate: number }
-export interface RoundSummary {
-  roundNumber: number; portfolioValue: number; weeklyChange: number; cash: number;
-  biggestMover?: { assetId: string; change: number };
-}
+export type ISODate=string; export type GameStatus="NOT_STARTED"|"RUNNING"|"COMPLETED"; export type AssetClass="EQUITY"|"COMMODITY"|"BOND"|"FOREX"|"CASH"; export type DataType="HISTORICAL"|"RECONSTRUCTED"|"SIMULATED"|"PLACEHOLDER"; export type TradeSide="BUY"|"SELL";
+export type EventCategory="MARKET"|"BANKING"|"ECONOMY"|"CREDIT"|"INDUSTRY"|"COMMODITY"|"MONETARY_POLICY"|"POLITICAL"|"GLOBAL"; export type EventSeverity="NORMAL"|"ELEVATED"|"CRISIS"|"SYSTEMIC"; export type NewsCategory="MARKET"|"BANKING"|"ECONOMY"|"CREDIT"|"INDUSTRY"|"COMMODITIES"|"POLITICS"|"WORLD"; export type MarketRegimeName="EXPANSION"|"BOOM"|"EUPHORIA"|"SLOWDOWN"|"CONTRACTION"|"PANIC"|"DEPRESSION"|"RECOVERY"; export type MarketSentiment="VERY_POSITIVE"|"POSITIVE"|"NEUTRAL"|"NERVOUS"|"NEGATIVE"|"PANIC"; export type StrategyTemplate="BALANCED"|"DEFENSIVE"|"GROWTH"|"CAPITAL_PRESERVATION"|"CONTRARIAN"|"CUSTOM"; export type RiskSeverity="INFO"|"WARNING"|"CRITICAL";
+export interface Asset{id:string;symbol:string;name:string;assetClass:AssetClass;sector:string;quoteCurrency:string;priceUnit:string;description:string;availableFrom:ISODate;availableUntil?:ISODate} export interface MarketDataPoint{assetId:string;date:ISODate;price:number;dataType:DataType}
+export interface HistoricalEvent{id:string;episodeId:string;date:ISODate;title:string;summary:string;category:EventCategory;severity:EventSeverity;dataType:DataType;relatedAssets:string[];relatedSectors:string[];marketEffects?:Record<string,number>;historicalContext?:string;historicalContextAvailableFrom?:ISODate} export interface NewsItem{id:string;episodeId:string;date:ISODate;availableFrom:ISODate;headline:string;summary:string;category:NewsCategory;importance:number;sentiment:MarketSentiment;dataType:DataType;relatedAssets:string[];relatedEvents:string[];sourceLabel?:string}
+export interface MarketRegime{id:string;startDate:ISODate;endDate:ISODate;internalRegime:MarketRegimeName;displayLabel:string} export interface Objective{id:string;type:"SURVIVE"|"CAPITAL_PRESERVATION"|"MAX_DRAWDOWN"|"MIN_CASH"|"OUTPERFORM_BENCHMARK";title:string;description:string;target:number;required:boolean;status:"ACTIVE"|"COMPLETED"|"FAILED"}
+export interface Episode{id:string;name:string;subtitle:string;startDate:ISODate;endDate:ISODate;startingCapital:number;baseCurrency:string;roundGranularity:"WEEK";description:string;historicalSummary:string;availableAssets:string[];objectives:Objective[];events:HistoricalEvent[];news:NewsItem[];marketRegimes:MarketRegime[];difficulty:"STANDARD";dataType:DataType;completionRules:{endDate:ISODate}}
+export interface Position{assetId:string;quantity:number;averageBuyPrice:number;currentPrice:number;marketValue:number;unrealizedPnL:number;unrealizedPnLPercent:number} export interface Trade{id:string;date:ISODate;roundNumber:number;assetId:string;side:TradeSide;quantity:number;price:number;grossValue:number;fee:number;netValue:number;reason?:string;note?:string} export interface PortfolioSnapshot{date:ISODate;roundNumber:number;portfolioValue:number;cash:number;benchmarkValue:number;cashAllocation:number;equityAllocation:number}
+export interface MarketState{prices:Record<string,number>;previousPrices:Record<string,number>;regime:MarketRegimeName;regimeLabel:string;sentiment:MarketSentiment} export interface StrategyProfile{id:StrategyTemplate;name:string;riskTolerance:"LOW"|"MEDIUM"|"HIGH";minCashAllocation:number;maxEquityAllocation:number;maxSinglePosition:number;maxSectorExposure:number;maxCommodityAllocation:number;maxDrawdownTarget:number;createdAt:string;updatedAt:string} export interface StrategyChange{date:ISODate;roundNumber:number;previousStrategy:StrategyProfile;newStrategy:StrategyProfile;changedFields:string[];optionalReason?:string}
+export interface RiskAlert{id:string;date:ISODate;type:"LOW_CASH"|"HIGH_EQUITY_EXPOSURE"|"SINGLE_POSITION_RISK"|"SECTOR_CONCENTRATION"|"DRAWDOWN_WARNING"|"MARKET_STRESS";severity:RiskSeverity;title:string;message:string;relatedAssets:string[];relatedStrategyRule:string} export interface RoundSummary{roundNumber:number;date:ISODate;portfolioValue:number;weeklyChange:number;cash:number;cashChange:number;biggestMover?:{assetId:string;change:number};biggestLoss?:{assetId:string;change:number};sentiment:MarketSentiment;newEvents:HistoricalEvent[];newNews:NewsItem[];newRiskAlerts:RiskAlert[];strategyViolationCount:number}
+export interface GameState{schemaVersion:2;gameId:string;seed:number;episodeId:string;status:GameStatus;currentDate:ISODate;roundNumber:number;baseCurrency:string;cash:number;positions:Position[];portfolioValue:number;startingCapital:number;realizedPnL:number;unrealizedPnL:number;totalReturn:number;maxDrawdown:number;feesPaid:number;tradeHistory:Trade[];portfolioHistory:PortfolioSnapshot[];marketState:MarketState;strategyProfile:StrategyProfile;strategyHistory:StrategyChange[];riskAlerts:RiskAlert[];seenEvents:string[];seenNews:string[];objectives:Objective[];lastBriefing?:RoundSummary;createdAt:string;updatedAt:string} export interface GameSettings{tradingFeeRate:number}

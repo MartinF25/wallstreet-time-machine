@@ -1,7 +1,7 @@
 # Savegame Schema
 
-Browser storage key: `wallstreet-time-machine:save:v1`.
+Browser storage key: `wallstreet-time-machine:save:v2`.
 
-The stored envelope contains `schemaVersion: 1` and the full `GameState`: identity, episode, status, date, round, seed, cash, positions, portfolio metrics, trades, snapshots, prices, and timestamps. Browser data is checked before use. Invalid or unsupported saves are ignored safely.
+The stored envelope contains `schemaVersion: 2` and the full `GameState`, including strategy profile/history, risk alerts, seen event/news IDs, objectives, fees, regime, sentiment, benchmark snapshots, and the latest briefing. Zod checks browser data before use.
 
-`migrateSavegame` is the future migration boundary. Version 1 passes through after validation; there are no fabricated legacy migrations.
+`migrateSavegame` upgrades Foundation v1 saves without losing cash, positions, trades, date, or history. New fields receive safe defaults and the old key is removed after a successful v2 save.

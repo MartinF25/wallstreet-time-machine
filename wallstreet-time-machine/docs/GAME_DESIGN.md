@@ -11,3 +11,7 @@ Career play begins in 1900 with USD 100,000 and advances sequentially through 18
 ## Round experience
 
 A round is presented as a compact historical sequence. Market Heat, tickers, period themes, Decisions, and Micro Missions explain current conditions and player consequences without forecasting or choosing trades.
+
+## Intelligence
+
+Economic information arrives after its observation period and may become stale. The player sees momentum, confidence, provenance, portfolio relevance, and neutral context, while every choice remains theirs. Intelligence improves evidence rather than predicting returns.

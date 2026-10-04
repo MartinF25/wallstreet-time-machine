@@ -20,3 +20,7 @@ Sprint 2 expands the original Great Crash scenario into an 18-era career timelin
 ## Cinematic game feel
 
 Rounds now reveal date, market moves, new reports, historical events, portfolio impact, and risk in sequence. Persistent settings control animation speed, reduced motion, overlays, ticker motion, and optional synthesized audio.
+
+## Intelligence foundation
+
+Released economic indicators, publication delays, confidence, freshness, research, watchlists, notes, and provenance now sit behind one current-date boundary. All bundled time series are marked reconstructed unless verified historical data exists.

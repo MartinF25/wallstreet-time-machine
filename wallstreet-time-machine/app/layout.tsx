@@ -5,6 +5,7 @@ import "./globals.css";
 import "./sprint.css";
 import "./campaign.css";
 import "./feel.css";
+import "./intelligence.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

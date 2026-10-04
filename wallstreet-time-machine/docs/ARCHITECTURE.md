@@ -11,3 +11,7 @@ The campaign layer sits above the episode engine. Era metadata is separate from 
 ## Presentation layer
 
 `src/game/feel` consumes completed engine output and never drives calculation timing. The client persists the next `GameState` before creating a transient reveal sequence, so skip, navigation, or reload cannot execute a round twice.
+
+## Intelligence layer
+
+Indicator, snapshot, research, and context services accept the current game date and return known information only. `IntelligenceContext` is the future Sprint-4 read boundary. Complete episode datasets are still statically bundled, so a server-only content boundary remains future work.

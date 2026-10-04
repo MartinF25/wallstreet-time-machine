@@ -12,3 +12,7 @@ npm run dev
 Quality gates: `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build`.
 
 All market prices are fictional and carry a `SIMULATED DATA` label. Reports are reconstructed, never presented as original quotations. No external API is used. Game code lives in `src/game/`, separate from the UI. See [Architecture](docs/ARCHITECTURE.md), [Game Design](docs/GAME_DESIGN.md), and the [Roadmap](docs/ROADMAP.md).
+
+## Campaign and career
+
+Sprint 2 expands the original Great Crash scenario into an 18-era career timeline. Panic of 1907, The Great Crash, and Oil Shock are playable as standalone episodes and through available career or challenge entries. Saves now use a version 3 archive with automatic import of the version 2 Great Crash save.

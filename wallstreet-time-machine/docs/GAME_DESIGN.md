@@ -3,3 +3,7 @@
 The player starts on 1 January 1928 with $100,000 and navigates the boom, crash, depression, and early recovery through 1933. Each week exposes only information available by that date. The player compares reports, market sentiment, portfolio risk, and self-imposed strategy limits before trading or consciously holding.
 
 Prices are deterministic simulations. Events are curated as historical; headlines are reconstructed summaries. The system offers context and warnings without making a decision for the player. Completion compares the portfolio with a simulated industrial benchmark and evaluates objectives from the actual play record.
+
+## Long-term play
+
+Career play begins in 1900 with USD 100,000 and advances sequentially through 18 eras. Results award a score, grade, and XP. Crisis windows temporarily increase round frequency, so normal monthly or weekly decisions can become daily during acute events.

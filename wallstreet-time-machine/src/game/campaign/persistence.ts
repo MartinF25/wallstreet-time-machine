@@ -1,0 +1,12 @@
+import type { GameState } from "../types";
+import { createCareer, DEFAULT_STATS } from "./career";
+import type { AppSaveV3 } from "./types";
+
+export const SAVE_V3_KEY="wallstreet-time-machine:save:v3";
+const LEGACY_V2_KEY="wallstreet-time-machine:save:v2";
+export function createAppSave():AppSaveV3{return{schemaVersion:3,career:null,activeEpisode:null,episodeSaves:{},challengeSaves:{},achievements:[{id:"first-era",title:"Time Traveler",description:"Complete your first career era."},{id:"capital-keeper",title:"Capital Keeper",description:"Finish an episode above starting capital."},{id:"crisis-tested",title:"Crisis Tested",description:"Complete a crisis challenge."}],stats:{...DEFAULT_STATS},settings:{difficulty:"HISTORIAN",carryoverMode:"FULL",reducedMotion:false},updatedAt:new Date().toISOString()}}
+export function migrateToV3(value:unknown):AppSaveV3{if(value&&typeof value==="object"&&(value as {schemaVersion?:number}).schemaVersion===3)return value as AppSaveV3;const save=createAppSave();const wrapped=value as {schemaVersion?:number;gameState?:GameState}|null;if(wrapped?.schemaVersion===2&&wrapped.gameState)return{...save,activeEpisode:wrapped.gameState,episodeSaves:{[wrapped.gameState.episodeId]:wrapped.gameState}};throw new Error("Unsupported savegame")}
+export function loadAppSave(){const raw=localStorage.getItem(SAVE_V3_KEY);if(raw){try{return migrateToV3(JSON.parse(raw))}catch{return createAppSave()}}const old=localStorage.getItem(LEGACY_V2_KEY);if(old){try{const migrated=migrateToV3(JSON.parse(old));saveAppSave(migrated);return migrated}catch{return createAppSave()}}return createAppSave()}
+export function saveAppSave(save:AppSaveV3){localStorage.setItem(SAVE_V3_KEY,JSON.stringify({...save,updatedAt:new Date().toISOString()}))}
+export function newCareerSave(){const save=createAppSave();return{...save,career:createCareer(),updatedAt:new Date().toISOString()}}
+export function storeEpisode(save:AppSaveV3,state:GameState,challengeId?:string):AppSaveV3{return{...save,activeEpisode:state,episodeSaves:challengeId?save.episodeSaves:{...save.episodeSaves,[state.episodeId]:state},challengeSaves:challengeId?{...save.challengeSaves,[challengeId]:state}:save.challengeSaves,stats:{...save.stats,trades:Object.values({...save.episodeSaves,[state.episodeId]:state}).reduce((n,s)=>n+s.tradeHistory.length,0)},updatedAt:new Date().toISOString()}}

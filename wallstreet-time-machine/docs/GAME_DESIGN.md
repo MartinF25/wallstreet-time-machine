@@ -1,5 +1,7 @@
 # Game Design
 
+Analyst desks interpret available information without deciding for the player. Conflicting readings are intentional gameplay: confidence, evidence, signal decay, and disagreement make uncertainty visible.
+
 The player starts on 1 January 1928 with $100,000 and navigates the boom, crash, depression, and early recovery through 1933. Each week exposes only information available by that date. The player compares reports, market sentiment, portfolio risk, and self-imposed strategy limits before trading or consciously holding.
 
 Prices are deterministic simulations. Events are curated as historical; headlines are reconstructed summaries. The system offers context and warnings without making a decision for the player. Completion compares the portfolio with a simulated industrial benchmark and evaluates objectives from the actual play record.

@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Sprint 4: deterministic analyst agents, signal intelligence, disagreement, memory, and risk scenarios
+
 - **Foundation — DONE:** deterministic game loop, trading, portfolio, persistence.
 - **Sprint 1 — DONE:** Great Crash, events, reconstructed news, strategy, risk, briefings, objectives, benchmark.
 - **Sprint 2 — DONE:** Campaign and Era Engine, career progression, unlocks, challenges, achievements.

@@ -1,5 +1,7 @@
 # Savegame Schema
 
+Schema v3 now defaults and migrates `agentSettings`, `agentAnalyses`, `agentSignalHistory`, `agentDisagreements`, and `agentMemory`. Analysis and signal collections are bounded; each desk retains at most 20 prior analyses in memory.
+
 Browser storage key: `wallstreet-time-machine:save:v3`. The former v2 key is read as a migration source.
 
 The embedded episode state retains its schema version 2 shape, including strategy profile/history, risk alerts, seen event/news IDs, objectives, fees, regime, sentiment, benchmark snapshots, and the latest briefing.

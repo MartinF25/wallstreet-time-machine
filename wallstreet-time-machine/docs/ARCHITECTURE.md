@@ -1,5 +1,9 @@
 # Architecture
 
+## Game HUD and round projection
+
+`src/components/game-hud.tsx` presents active gameplay through four stable zones. `src/game/round-investment` derives the current-round ledger from engine state and trades, keeping financial calculation outside React. The HUD consumes existing exposure, margin, identity, era, and reveal services and does not mutate gameplay.
+
 ## Historical data and advanced trading
 
 `src/game/historical-data` separates providers, provenance, normalization, validation, caching, dataset versions, and known-date filtering. Provider availability never changes the deterministic episode fallback. `src/game/advanced-trading` owns dated market rules, the trading calendar, short liabilities, borrow accrual, margin accounting, calls, exposure, and forced covers; the engine coordinates those pure services at round boundaries.

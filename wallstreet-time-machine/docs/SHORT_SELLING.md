@@ -1,5 +1,7 @@
 # Short Selling
 
+SHORT and COVER decisions now retain individual entries, reasons, trade links, fees, borrow costs, and multi-horizon outcomes. The chart labels the live average as SHORT ENTRY and calculates return in the correct inverse direction.
+
 The persistent trade dock previews position value, borrow availability and rate, initial and maintenance margin, while the Investment HUD shows short exposure and available margin. Every position row states SHORT in text.
 
 SHORT opens a borrowed position; COVER closes it partially or fully. Proceeds remain restricted and initial margin is removed from available cash into collateral. Portfolio equity equals available cash + long value + collateral + restricted proceeds − short liability. This prevents free spending of sale proceeds.

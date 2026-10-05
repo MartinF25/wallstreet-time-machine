@@ -1,5 +1,7 @@
 # Game Feel
 
+Market Memory turns round changes into a continuous line with entry and current markers. Decision Outcome language emphasizes position gain, pressure, costs, and elapsed time without casino celebration or moral judgment.
+
 Sprint 5.5 keeps the cinematic reveal and adds a persistent consequence layer. A round now leaves behind its portfolio result, leading move, cash change, fees, and borrow costs while the main chart, character HUD, and action dock maintain a clear strategy-game hierarchy.
 
 Era identity extends reveals with a compact current-era reaction portrait. Era transitions use a short crossfade, respect animation speed and Reduced Motion, and remain skippable.

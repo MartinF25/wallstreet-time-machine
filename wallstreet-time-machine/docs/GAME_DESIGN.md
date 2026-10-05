@@ -1,5 +1,7 @@
 # Game Design
 
+Investment choices now form a durable story. The player can compare what they knew, why they acted or held, and how the position evolved at several horizons without hindsight labels such as right or wrong.
+
 The active game follows Observe → Analyze → Decide → Trade or Hold → Advance → Experience Result → Adapt. Investor identity, current era, capital, deployment, exposure, round result, risk, and next actions remain visible around a dominant selected-market presentation.
 
 Sprint 5 permits historically gated short selling. SHORT and COVER remain deliberate player orders; proceeds are restricted, borrow costs accrue with elapsed game time, and maintenance deficits can lead to a visible margin call and deterministic forced cover. Historical source metadata describes evidence and availability without implying that simulated episode prices are real observations.

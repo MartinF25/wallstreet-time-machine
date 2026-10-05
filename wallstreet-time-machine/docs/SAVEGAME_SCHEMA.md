@@ -1,5 +1,7 @@
 # Savegame Schema
 
+Sprint 5.6 adds episode-local `decisionHistory`, `decisionOutcomes`, `assetPriceHistory`, and `roundHistory`. Migration initializes missing collections and seeds only the current known simulated price; it never invents prior HOLD decisions.
+
 Sprint 5 keeps archive version 3 and adds `historicalDatasetVersion`, short positions, borrow fees, margin state, margin calls, forced-cover counters, and advanced exposure limits. Migration supplies safe zero-value defaults and preserves prior cash, long positions, trades, and identity data.
 
 Sprint 4.6 adds `eraIdentityState` to v3 with visual unlocks, immutable era memories, career badges, visual settings, and optional legacy portrait configuration. Older v3 saves receive safe defaults.

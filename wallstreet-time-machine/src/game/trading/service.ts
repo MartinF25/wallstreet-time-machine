@@ -5,6 +5,8 @@ import type { GameState, Trade, TradeSide } from "../types";
 import { TradeInputSchema } from "../validation";
 import { getEpisode } from "../campaign/episodes";
 import { coverShort, openShort } from "../advanced-trading/service";
+import { completeDecision, createDecision } from "../decision-memory/service";
+import type { DecisionReason } from "../decision-memory/models";
 
 export const TRADING_FEE_RATE = 0.0025;
 export const calculateTradingFee = (gross: number) => gross * TRADING_FEE_RATE;
@@ -17,8 +19,11 @@ export function executeTrade(state: GameState, side: TradeSide, assetId: string,
   const asset=ASSETS.find(item=>item.id===assetId)!; const rule=getEpisode(state.episodeId).specialRules?.find(item=>item.startDate<=state.currentDate&&item.endDate>=state.currentDate&&(!item.blockedAssetClasses||item.blockedAssetClasses.includes(asset.assetClass)));
   if(rule)throw new Error(`${rule.type.replaceAll("_"," ")}: ${rule.reason}`);
   if (!Number.isFinite(quantity) || quantity <= 0) throw new Error("Quantity must be greater than zero");
-  if(side==="SHORT")return recalculateGameState(openShort(state,assetId,quantity));
-  if(side==="COVER")return recalculateGameState(coverShort(state,assetId,quantity));
+  const decision=createDecision(state,side,{assetId,quantity,reason:(reason as DecisionReason)??"CUSTOM",reasonText:note??reason});
+  if(side==="SHORT"||side==="COVER"){
+    const next=recalculateGameState(side==="SHORT"?openShort(state,assetId,quantity):coverShort(state,assetId,quantity));
+    return completeDecision(next,decision,next.tradeHistory.at(-1)?.id);
+  }
   const price = getMarketPrice(state, assetId); const grossValue = price * quantity; const fee = calculateTradingFee(grossValue);
   const positions = state.positions.map((position) => ({ ...position }));
   const index = positions.findIndex((position) => position.assetId === assetId);
@@ -37,5 +42,5 @@ export function executeTrade(state: GameState, side: TradeSide, assetId: string,
     old.quantity -= quantity; if (old.quantity < 1e-8) positions.splice(index, 1);
   }
   const trade: Trade = { id: `${state.gameId}-${state.tradeHistory.length + 1}`, date: state.currentDate, roundNumber: state.roundNumber, assetId, side, quantity, price, grossValue, fee, netValue: side === "BUY" ? grossValue + fee : grossValue - fee, reason, note };
-  return recalculateGameState({ ...state, cash, positions, realizedPnL, feesPaid: state.feesPaid + fee, tradeHistory: [...state.tradeHistory, trade] });
+  return completeDecision(recalculateGameState({ ...state, cash, positions, realizedPnL, feesPaid: state.feesPaid + fee, tradeHistory: [...state.tradeHistory, trade] }),decision,trade.id);
 }

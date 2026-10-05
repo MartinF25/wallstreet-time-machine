@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Sprint 5.6: decision persistence, consequence snapshots, price history, chart ranges, entry markers, and Market Memory
+
 - [x] Sprint 5.5: investor HUD, dominant market action, round investment/result projection, exposure panel, and responsive trade action dock
 
 - [x] Sprint 5: provider architecture, provenance/licensing registry, dataset tooling, dated trading rules, calendar handling, and advanced short/margin mechanics

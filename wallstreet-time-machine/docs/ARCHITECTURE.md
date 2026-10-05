@@ -1,5 +1,9 @@
 # Architecture
 
+## Decision and market memory
+
+`src/game/decision-memory` owns compact decision/context snapshots, per-asset price points, bounded known-date selectors, outcome snapshots, market metrics, and round recap records. Engine transitions append history; trading creates and links decisions; React only presents these projections.
+
 ## Game HUD and round projection
 
 `src/components/game-hud.tsx` presents active gameplay through four stable zones. `src/game/round-investment` derives the current-round ledger from engine state and trades, keeping financial calculation outside React. The HUD consumes existing exposure, margin, identity, era, and reveal services and does not mutate gameplay.

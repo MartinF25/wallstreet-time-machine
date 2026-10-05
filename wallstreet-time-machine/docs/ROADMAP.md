@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Sprint 5: provider architecture, provenance/licensing registry, dataset tooling, dated trading rules, calendar handling, and advanced short/margin mechanics
+
 - [x] Sprint 4.6: era identity, visual evolution, passport, badges, and career gallery
 
 - [x] Sprint 4.5: investor identity, avatars, archetypes, perks, mentors, reactions, and legacy

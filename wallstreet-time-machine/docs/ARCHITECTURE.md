@@ -1,5 +1,9 @@
 # Architecture
 
+## Historical data and advanced trading
+
+`src/game/historical-data` separates providers, provenance, normalization, validation, caching, dataset versions, and known-date filtering. Provider availability never changes the deterministic episode fallback. `src/game/advanced-trading` owns dated market rules, the trading calendar, short liabilities, borrow accrual, margin accounting, calls, exposure, and forced covers; the engine coordinates those pure services at round boundaries.
+
 The identity presentation resolver is a pure layer above campaign metadata. It accepts public era IDs and visual state only; it cannot access future events, prices, outcomes, or trading services.
 
 The pure `identity` domain owns profiles, catalogs, bounded loadouts, presentation preferences, reactions, migration defaults, and legacy derivation. React identity screens consume these services without changing the market engine.

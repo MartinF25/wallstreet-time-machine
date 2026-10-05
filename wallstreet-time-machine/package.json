@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "data:import": "node scripts/data-tools.mjs import",
+    "data:validate": "node scripts/data-tools.mjs validate",
+    "data:status": "node scripts/data-tools.mjs status"
   },
   "dependencies": {
     "next": "16.3.6",

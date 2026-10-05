@@ -4,6 +4,7 @@ import { recalculateGameState } from "../engine/game-engine";
 import type { GameState, Trade, TradeSide } from "../types";
 import { TradeInputSchema } from "../validation";
 import { getEpisode } from "../campaign/episodes";
+import { coverShort, openShort } from "../advanced-trading/service";
 
 export const TRADING_FEE_RATE = 0.0025;
 export const calculateTradingFee = (gross: number) => gross * TRADING_FEE_RATE;
@@ -16,6 +17,8 @@ export function executeTrade(state: GameState, side: TradeSide, assetId: string,
   const asset=ASSETS.find(item=>item.id===assetId)!; const rule=getEpisode(state.episodeId).specialRules?.find(item=>item.startDate<=state.currentDate&&item.endDate>=state.currentDate&&(!item.blockedAssetClasses||item.blockedAssetClasses.includes(asset.assetClass)));
   if(rule)throw new Error(`${rule.type.replaceAll("_"," ")}: ${rule.reason}`);
   if (!Number.isFinite(quantity) || quantity <= 0) throw new Error("Quantity must be greater than zero");
+  if(side==="SHORT")return recalculateGameState(openShort(state,assetId,quantity));
+  if(side==="COVER")return recalculateGameState(coverShort(state,assetId,quantity));
   const price = getMarketPrice(state, assetId); const grossValue = price * quantity; const fee = calculateTradingFee(grossValue);
   const positions = state.positions.map((position) => ({ ...position }));
   const index = positions.findIndex((position) => position.assetId === assetId);

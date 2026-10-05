@@ -1,0 +1,26 @@
+.short-position,
+.margin-call {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  padding: 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--accent, #d4af37) 48%, transparent);
+  background: color-mix(in srgb, var(--panel, #10151b) 88%, #000);
+}
+
+.short-position span,
+.short-position small,
+.margin-call span,
+.margin-call small {
+  color: var(--muted, #98a1ab);
+}
+
+.margin-call {
+  border-color: #d96854;
+  box-shadow: inset 3px 0 #d96854;
+}
+
+.margin-call > b,
+.margin-call > strong {
+  color: #f08a73;
+}

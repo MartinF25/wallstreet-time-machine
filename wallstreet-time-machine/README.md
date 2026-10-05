@@ -1,5 +1,7 @@
 # Wall Street: Time Machine
 
+Sprint 5 adds a licensed-source registry and provider pipeline for historical observations, dataset versioning and validation tools, plus playable SHORT/COVER orders with borrow costs, margin, dated market rules, calls, and forced liquidation. Bundled episode prices remain clearly simulated until approved historical series are imported.
+
 Sprint 4.6 carries one investor identity through ten historical visual styles with deterministic moods, crisis treatments, badges, a passport, and a frozen career portrait archive.
 
 Sprint 4.5 adds investor identity, accessible avatar selection, ten information-focused archetypes, traits, perks, mentors, reactions, and behavior-based legacy progression.

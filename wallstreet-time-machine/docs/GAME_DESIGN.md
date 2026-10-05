@@ -1,5 +1,7 @@
 # Game Design
 
+Sprint 5 permits historically gated short selling. SHORT and COVER remain deliberate player orders; proceeds are restricted, borrow costs accrue with elapsed game time, and maintenance deficits can lead to a visible margin call and deterministic forced cover. Historical source metadata describes evidence and availability without implying that simulated episode prices are real observations.
+
 Character evolution is a visual record of the journey. The time machine preserves the investor while each historical world changes around them.
 
 Investor identity changes how known information is organized and explained. It never changes history, market prices, objective agent signals, or returns.

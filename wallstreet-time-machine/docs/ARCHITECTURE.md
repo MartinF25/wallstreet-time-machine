@@ -33,3 +33,7 @@ The campaign layer sits above the episode engine. Era metadata is separate from 
 ## Intelligence layer
 
 Indicator, snapshot, research, and context services accept the current game date and return known information only. `IntelligenceContext` is the future Sprint-4 read boundary. Complete episode datasets are still statically bundled, so a server-only content boundary remains future work.
+# Character Foundation
+
+`src/game/character-foundation` enthält Modell, Kataloge, Zod-Schema und pure Services. Der Character wird über `InvestorProfile.character` in die bestehende Identity- und Campaign-Architektur eingebunden. UI-Komponenten lesen Katalogdaten und effektive Werte, verändern die Modifier-Logik aber nicht.
+

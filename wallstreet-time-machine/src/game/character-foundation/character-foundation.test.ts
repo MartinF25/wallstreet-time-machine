@@ -1,0 +1,22 @@
+import{describe,expect,it}from"vitest";import{CHARACTER_ARCHETYPES,CHARACTER_TRAITS,CHARACTER_WEAKNESSES}from"./catalog";import{addCharacterXp,createCharacter,getEffectiveCharacterStats,getXpRequiredForNextLevel}from"./service";import{CharacterSchema}from"./schema";
+import{createAppSave,migrateToV3,newCareerSave}from"../campaign/persistence";
+const valid=()=>createCharacter({id:"player-1",name:"Ada Mercer",avatar:"portrait-1",archetype:"SPECULATOR",traits:["TAPE_READER","CALCULATED_RISK"],weakness:"OVERCONFIDENT"});
+describe("character foundation",()=>{
+ it("provides exactly six archetypes",()=>expect(CHARACTER_ARCHETYPES).toHaveLength(6));
+ it("provides all eight traits",()=>expect(CHARACTER_TRAITS).toHaveLength(8));
+ it("provides all six weaknesses",()=>expect(CHARACTER_WEAKNESSES).toHaveLength(6));
+ it("keeps every base stat in range",()=>expect(CHARACTER_ARCHETYPES.flatMap(x=>Object.values(x.baseStats)).every(x=>x>=0&&x<=100)).toBe(true));
+ it("creates a schema-valid player",()=>expect(CharacterSchema.safeParse(valid()).success).toBe(true));
+ it("uses archetype base stats",()=>expect(valid().stats).toEqual(CHARACTER_ARCHETYPES[0].baseStats));
+ it("requires a non-empty name",()=>expect(()=>createCharacter({name:"",avatar:"a",archetype:"BANKER",traits:["NEGOTIATOR","DEEP_RESEARCH"],weakness:"IMPATIENT"})).toThrow());
+ it("rejects duplicate traits",()=>expect(()=>createCharacter({name:"A",avatar:"a",archetype:"BANKER",traits:["NEGOTIATOR","NEGOTIATOR"],weakness:"IMPATIENT"})).toThrow());
+ it("rejects unknown enum data",()=>expect(CharacterSchema.safeParse({...valid(),weakness:"NONE"}).success).toBe(false));
+ it("applies trait and weakness modifiers deterministically",()=>expect(getEffectiveCharacterStats(valid())).toEqual(getEffectiveCharacterStats(valid())));
+ it("adds Tape Reader to trading",()=>expect(getEffectiveCharacterStats(valid()).trading).toBe(90));
+ it("combines risk trait and weakness",()=>expect(getEffectiveCharacterStats(valid()).risk).toBe(58));
+ it("clamps effective stats at 100",()=>expect(getEffectiveCharacterStats({...valid(),stats:{...valid().stats,trading:100}}).trading).toBe(100));
+ it("computes increasing XP thresholds",()=>expect(getXpRequiredForNextLevel(3)).toBeGreaterThan(getXpRequiredForNextLevel(2)));
+ it("levels up and retains overflow XP",()=>expect(addCharacterXp(valid(),260)).toMatchObject({level:2,xp:10}));
+ it("ignores negative XP awards",()=>expect(addCharacterXp(valid(),-50).xp).toBe(0));
+ it("migrates an older V3 investor profile without a character",()=>{const save=newCareerSave(),legacy={...save.investorProfile}as Record<string,unknown>;delete legacy.character;const migrated=migrateToV3({...createAppSave(),...save,investorProfile:legacy});expect(migrated.investorProfile?.character).toMatchObject({schemaVersion:1,actorType:"PLAYER",archetype:"VALUE_INVESTOR"})});
+});

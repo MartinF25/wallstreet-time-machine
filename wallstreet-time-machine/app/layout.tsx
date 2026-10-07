@@ -13,6 +13,7 @@ import "./era-identity.css";
 import "./era-preview.css";
 import "./trading.css";
 import "./game-hud.css";
+import "./character-foundation.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

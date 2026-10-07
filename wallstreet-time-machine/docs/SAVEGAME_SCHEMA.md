@@ -21,3 +21,7 @@ The embedded episode state retains its schema version 2 shape, including strateg
 The application archive contains `career`, `activeEpisode`, `episodeSaves`, `challengeSaves`, `achievements`, `stats`, and `settings`. Embedded episode states retain schema version 2. A prior v2 wrapper is imported into `activeEpisode` and `episodeSaves` as a standalone game.
 
 Sprint 3 extends the same v3 archive with `watchlist`, `playerNotes`, `acknowledgedAlerts`, `intelligenceAlerts`, `seenIndicatorReleases`, and the persistent Intelligence Detail preference. Existing v3 saves receive defaults during migration.
+# Character Foundation
+
+`investorProfile.character` enthält seit der Character Foundation das validierte Character-Modell mit Archetyp, zwei Traits, Weakness, sechs Basiswerten, Level, XP und Reputation. Ältere Saves mit `schemaVersion: 3` werden beim Laden additiv ergänzt; deshalb war keine neue Top-Level-Schemaversion erforderlich.
+

@@ -1,4 +1,5 @@
-import{describe,expect,it}from"vitest";import{CHARACTER_ARCHETYPES,CHARACTER_TRAITS,CHARACTER_WEAKNESSES}from"./catalog";import{addCharacterXp,createCharacter,getEffectiveCharacterStats,getXpRequiredForNextLevel}from"./service";import{CharacterSchema}from"./schema";
+import type{Character}from"./models";
+import{describe,expect,it}from"vitest";import{CHARACTER_ARCHETYPES,CHARACTER_TRAITS,CHARACTER_WEAKNESSES}from"./catalog";import{addCharacterXp,awardCharacterCredits,canSpendCharacterCredits,canUnlockCharacterSkill,createCharacter,getEffectiveCharacterStats,getXpRequiredForNextLevel,spendCharacterCredits,unlockCharacterSkill}from"./service";import{CharacterSchema}from"./schema";
 import{createAppSave,migrateToV3,newCareerSave}from"../campaign/persistence";
 const valid=()=>createCharacter({id:"player-1",name:"Ada Mercer",avatar:"portrait-1",archetype:"SPECULATOR",traits:["TAPE_READER","CALCULATED_RISK"],weakness:"OVERCONFIDENT"});
 describe("character foundation",()=>{
@@ -19,4 +20,16 @@ describe("character foundation",()=>{
  it("levels up and retains overflow XP",()=>expect(addCharacterXp(valid(),260)).toMatchObject({level:2,xp:10}));
  it("ignores negative XP awards",()=>expect(addCharacterXp(valid(),-50).xp).toBe(0));
  it("migrates an older V3 investor profile without a character",()=>{const save=newCareerSave(),legacy={...save.investorProfile}as Record<string,unknown>;delete legacy.character;const migrated=migrateToV3({...createAppSave(),...save,investorProfile:legacy});expect(migrated.investorProfile?.character).toMatchObject({schemaVersion:1,actorType:"PLAYER",archetype:"VALUE_INVESTOR"})});
-});
+ it("awards and spends credits without touching cash",()=>{const funded=awardCharacterCredits(valid(),500,"scenario_completed");expect(funded.credits).toBe(500);expect(spendCharacterCredits(funded,125).credits).toBe(375)});
+ it("rejects negative credit awards and spending",()=>{expect(()=>awardCharacterCredits(valid(),-1,"round_completed")).toThrow();expect(()=>spendCharacterCredits(valid(),-1)).toThrow()});
+ it("reports insufficient credits",()=>expect(canSpendCharacterCredits(valid(),1)).toBe(false));
+ it("unlocks a valid skill atomically",()=>{const funded={...valid(),credits:200};expect(unlockCharacterSkill(funded,"TAPE_READER_I")).toMatchObject({credits:50,unlockedSkills:["TAPE_READER_I"]});expect(funded).toMatchObject({credits:200,unlockedSkills:[]})});
+ it("blocks duplicate skill unlocks",()=>{const owned={...valid(),credits:500,unlockedSkills:["TAPE_READER_I"]as Character["unlockedSkills"]};expect(canUnlockCharacterSkill(owned,"TAPE_READER_I")).toMatchObject({allowed:false,reason:"owned"})});
+ it("blocks a missing prerequisite",()=>{const character={...valid(),credits:1000,level:5};expect(canUnlockCharacterSkill(character,"TAPE_READER_II")).toMatchObject({allowed:false,reason:"missing_prerequisite"})});
+ it("blocks insufficient skill credits",()=>expect(canUnlockCharacterSkill(valid(),"TAPE_READER_I")).toMatchObject({allowed:false,reason:"insufficient_credits"}));
+ it("blocks unmet level requirements",()=>{const character={...valid(),credits:1000};expect(canUnlockCharacterSkill(character,"TAPE_READER_II")).toMatchObject({allowed:false,reason:"level_required"})});
+ it("enforces limited archetype synergies",()=>{const character={...valid(),credits:1000,level:3,archetype:"VALUE_INVESTOR"as const};expect(canUnlockCharacterSkill(character,"SHORT_SPECIALIST")).toMatchObject({allowed:false,reason:"archetype_restricted"})});
+ it("combines trait, weakness and multiple skill modifiers",()=>{const character={...valid(),unlockedSkills:["TAPE_READER_I","EXECUTION_DISCIPLINE"]as Character["unlockedSkills"]};expect(getEffectiveCharacterStats(character)).toMatchObject({trading:95,risk:60})});
+ it("migrates V3 characters without progression and preserves identity",()=>{const save=newCareerSave(),character={...save.investorProfile!.character}as Record<string,unknown>;delete character.credits;delete character.unlockedSkills;const migrated=migrateToV3({...save,investorProfile:{...save.investorProfile!,character}});expect(migrated.investorProfile?.character).toMatchObject({name:"Investor",credits:0,unlockedSkills:[]})});
+ it("persists valid progression through migration",()=>{const save=newCareerSave(),character={...save.investorProfile!.character,credits:800,unlockedSkills:["SOURCE_EVALUATION"]as const};const migrated=migrateToV3({...save,investorProfile:{...save.investorProfile!,character}});expect(migrated.investorProfile?.character).toMatchObject({credits:800,unlockedSkills:["SOURCE_EVALUATION"]})});
+ it("rejects invalid and duplicate saved skill ids",()=>{expect(CharacterSchema.safeParse({...valid(),unlockedSkills:["FAKE_SKILL"]}).success).toBe(false);expect(CharacterSchema.safeParse({...valid(),unlockedSkills:["TAPE_READER_I","TAPE_READER_I"]}).success).toBe(false)});});

@@ -25,3 +25,5 @@ Sprint 3 extends the same v3 archive with `watchlist`, `playerNotes`, `acknowled
 
 `investorProfile.character` enthält seit der Character Foundation das validierte Character-Modell mit Archetyp, zwei Traits, Weakness, sechs Basiswerten, Level, XP und Reputation. Ältere Saves mit `schemaVersion: 3` werden beim Laden additiv ergänzt; deshalb war keine neue Top-Level-Schemaversion erforderlich.
 
+Character Progression ergänzt darin `credits` und `unlockedSkills`. V3-Saves ohne diese Felder erhalten 0 Credits und eine leere Skill-Liste. Unbekannte oder doppelte Skill-IDs werden nicht als gültiger Character akzeptiert.
+

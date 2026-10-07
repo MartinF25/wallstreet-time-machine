@@ -1,0 +1,21 @@
+import type{InformationItem,InformationSource,InformationState}from"./models";
+export const INFORMATION_SOURCES:InformationSource[]=[
+ {id:"newspaper-financial",name:"Financial Newspaper",category:"NEWSPAPER",baseReliability:72,accessLevel:0,minYear:1800},
+ {id:"private-banker",name:"Private Banker",category:"BANKER",baseReliability:68,accessLevel:1,minYear:1800},
+ {id:"industrial-contact",name:"Industrial Contact",category:"INDUSTRIALIST",baseReliability:61,accessLevel:1,minYear:1850},
+ {id:"city-journalist",name:"City Journalist",category:"JOURNALIST",baseReliability:64,accessLevel:0,minYear:1800},
+ {id:"ticker-tape",name:"Ticker Tape",category:"MARKET_TAPE",baseReliability:78,accessLevel:0,minYear:1867},
+ {id:"exchange-bulletin",name:"Exchange Bulletin",category:"EXCHANGE",baseReliability:91,accessLevel:0,minYear:1800},
+ {id:"government-office",name:"Government Office",category:"GOVERNMENT",baseReliability:82,accessLevel:1,minYear:1800},
+ {id:"wire-service",name:"Financial Newswire",category:"NEWSWIRE",baseReliability:79,accessLevel:0,minYear:1930},
+ {id:"electronic-terminal",name:"Electronic Terminal",category:"ELECTRONIC_TERMINAL",baseReliability:84,accessLevel:1,minYear:1970},
+ {id:"digital-feed",name:"Digital News Feed",category:"DIGITAL_NEWS",baseReliability:76,accessLevel:0,minYear:1995}
+];
+export const SEED_INFORMATION:InformationItem[]=[
+ {id:"rumor-railroad-liquidity",type:"RUMOR",sourceId:"private-banker",title:"Railroad company may face liquidity problems",summary:"A private banking contact reports that short-term financing may be tightening.",details:["Several renewal requests reportedly reached lenders.","No company statement is available."],revealedDetails:[],episodeId:"panic-1907",availableFromDate:"1907-06-01",createdRound:1,expiresRound:8,affectedAssets:["railroads"],affectedSectors:["TRANSPORT"],baseReliability:58,importance:"HIGH",marketImpact:"HIGH",acquisitionCost:2500,investigationCost:1200,status:"AVAILABLE",rumorTruthState:"PARTIALLY_TRUE",investigationCount:0,seed:190701},
+ {id:"rumor-steel-orders",type:"PRIVATE_TIP",sourceId:"industrial-contact",title:"Industrial steel orders reportedly weakening",summary:"An industrial contact describes slower forward orders, without audited figures.",details:["The weakness appears concentrated among rail suppliers."],revealedDetails:[],episodeId:"great-crash",availableFromDate:"1928-09-01",createdRound:2,expiresRound:12,affectedAssets:["industrials"],affectedSectors:["INDUSTRY"],baseReliability:63,importance:"MEDIUM",marketImpact:"MEDIUM",acquisitionCost:1800,investigationCost:900,status:"AVAILABLE",rumorTruthState:"TRUE",investigationCount:0,seed:192809},
+ {id:"rumor-bank-withdrawals",type:"RUMOR",sourceId:"city-journalist",title:"Unusual withdrawals reported at regional banks",summary:"A reporter has heard multiple accounts of depositors seeking cash.",details:["Reports originate from two towns.","No exchange bulletin confirms broader stress."],revealedDetails:[],episodeId:"great-crash",availableFromDate:"1929-10-01",createdRound:18,expiresRound:30,affectedAssets:["banking"],affectedSectors:["BANKING"],baseReliability:47,importance:"CRITICAL",marketImpact:"EXTREME",acquisitionCost:0,investigationCost:1500,status:"AVAILABLE",rumorTruthState:"FALSE",investigationCount:0,seed:192910},
+ {id:"news-exchange-credit",type:"CONFIRMED_NEWS",sourceId:"exchange-bulletin",title:"Exchange publishes revised credit requirements",summary:"The exchange confirms revised collateral requirements for member firms.",details:["The bulletin is an official public record."],revealedDetails:["The bulletin is an official public record."],episodeId:"great-crash",availableFromDate:"1929-10-24",createdRound:24,affectedAssets:["banking","industrials"],affectedSectors:["MARKET"],baseReliability:92,importance:"CRITICAL",marketImpact:"HIGH",acquisitionCost:0,investigationCost:0,status:"CONFIRMED",investigationCount:0,seed:192924}
+];
+export const emptyInformationState=():InformationState=>({items:[],lastProcessedRound:-1});
+export const seededInformationState=():InformationState=>({items:SEED_INFORMATION.map(x=>({...x,details:[...x.details],revealedDetails:[...x.revealedDetails],affectedAssets:[...x.affectedAssets],affectedSectors:[...x.affectedSectors]})),lastProcessedRound:-1});

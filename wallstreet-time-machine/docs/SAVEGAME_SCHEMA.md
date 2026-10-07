@@ -27,3 +27,5 @@ Sprint 3 extends the same v3 archive with `watchlist`, `playerNotes`, `acknowled
 
 Character Progression ergänzt darin `credits` und `unlockedSkills`. V3-Saves ohne diese Felder erhalten 0 Credits und eine leere Skill-Liste. Unbekannte oder doppelte Skill-IDs werden nicht als gültiger Character akzeptiert.
 
+Die Information & Rumor Engine ergänzt `information` als additiven V3-Zustand. Gespeichert werden verfügbare und erworbene Items, interne Truth States, Investigation-Fortschritt, enthüllte Details und Lifecycle-Status. Alte V3-Saves erhalten einen leeren Information State; neue Careers erhalten kuratierte Seed-Items.
+

@@ -14,6 +14,7 @@ import "./era-preview.css";
 import "./trading.css";
 import "./game-hud.css";
 import "./character-foundation.css";
+import "./information-rumor.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

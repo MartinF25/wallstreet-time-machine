@@ -29,3 +29,5 @@ Character Progression ergänzt darin `credits` und `unlockedSkills`. V3-Saves oh
 
 Die Information & Rumor Engine ergänzt `information` als additiven V3-Zustand. Gespeichert werden verfügbare und erworbene Items, interne Truth States, Investigation-Fortschritt, enthüllte Details und Lifecycle-Status. Alte V3-Saves erhalten einen leeren Information State; neue Careers erhalten kuratierte Seed-Items.
 
+Rival Investors ergänzen `rivals` additiv. Der Zustand umfasst Rival-IDs, Character, Strategie, Kapital, Cash, Positionen, privates Wissen, versteckte Ziele, Status und Activity History. Alte V3-Saves erhalten deterministisch die für 1900 verfügbare Rival-Besetzung.
+

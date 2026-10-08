@@ -16,6 +16,7 @@ import "./game-hud.css";
 import "./character-foundation.css";
 import "./information-rumor.css";
 import "./rivals.css";
+import "./round-experience.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

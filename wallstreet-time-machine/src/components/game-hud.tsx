@@ -12,6 +12,7 @@ import { tradingMetadata } from "@/src/game/advanced-trading/rules";
 import { roundInvestmentSummary } from "@/src/game/round-investment/service";
 import { historyForRange, latestOutcome, marketMemory } from "@/src/game/decision-memory/service";
 import type { ChartRange, DecisionReason, DecisionType } from "@/src/game/decision-memory/models";
+import type { MarketSessionPhase } from "@/src/game/round-experience/models";
 
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 const date = (value: string) => new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
@@ -35,6 +36,7 @@ export default function GameHud(props: {
   summary: RoundSummary | null;
   before: GameState | null;
   revealActive: boolean;
+  sessionPhase: MarketSessionPhase;
   overlay?: ReactNode;
   onHome: () => void;
   onSide: (side: TradeSide) => void;
@@ -94,7 +96,7 @@ export default function GameHud(props: {
     <header className="era-command">
       <div className="hud-nav"><button className="hud-menu" onClick={props.onHome}>← MENU</button><button className="hud-menu" onClick={()=>setHistoryOpen(true)}>HISTORY</button></div>
       <div><span>{currentEra?.title ?? props.episodeName}</span><strong>{date(game.currentDate)}</strong></div>
-      <div><span>ROUND {game.roundNumber}</span><strong>MARKET {props.heat}</strong></div>
+      <div><span>ROUND {game.roundNumber} / {props.sessionPhase.replaceAll("_", " ")}</span><strong>{props.sessionPhase === "TRADING" ? "MARKET OPEN" : `MARKET ${props.heat}`}</strong></div>
     </header>
     {props.crisis ? <div className="crisis-command"><b>CRISIS MODE</b><span>1 ROUND = 1 TRADING DAY</span><strong>MARKET STRESS: {props.heat}</strong></div> : null}
     <div className="hud-ticker" aria-label="Current market moves">{assets.map((item) => { const now = game.marketState.prices[item.id]; const old = game.marketState.previousPrices[item.id] ?? now; const change = old ? ((now / old) - 1) * 100 : 0; return <span key={item.id}>{item.symbol} <b>{change >= 0 ? "+" : ""}{change.toFixed(1)}%</b></span>; })}</div>
@@ -136,7 +138,7 @@ export default function GameHud(props: {
       <div className="action-cluster">{(["BUY", "SELL", "SHORT", "COVER"] as TradeSide[]).map((action) => <button className={props.side === action ? "active" : ""} aria-pressed={props.side === action} onClick={() => props.onSide(action)} key={action}>{action}</button>)}<button className={props.holdSelected ? "active" : ""} aria-pressed={props.holdSelected} onClick={props.onHold}>HOLD</button></div>
       <div className="trade-ticket"><select aria-label="Asset" value={props.assetId} onChange={(event) => props.onAsset(event.target.value)}>{assets.map((item) => <option value={item.id} key={item.id}>{item.symbol} · {item.name}</option>)}</select><input aria-label="Quantity" type="number" min=".01" value={props.quantity} onChange={(event) => props.onQuantity(event.target.value)}/><select className="reason-select" aria-label="Decision reason" value={props.reason} onChange={(event)=>props.onReason(event.target.value as DecisionReason)}>{["STRATEGY","VALUATION","MOMENTUM","CREDIT_STRESS","RISK_REDUCTION","LIQUIDITY","MACRO","NEWS","CRISIS","CUSTOM"].map(value=><option value={value} key={value}>{value.replaceAll("_"," ")}</option>)}</select><div><small>AMOUNT</small><b>{money.format(gross)}</b></div><div><small>FEES</small><b>{money.format(fee)}</b></div>{props.side === "SHORT" ? <><div><small>BORROW</small><b>{meta.borrowAvailability} · {(meta.borrowFeeRate * 100).toFixed(1)}%</b></div><div><small>INITIAL MARGIN</small><b>{money.format(margin)}</b></div></> : null}<button className="execute-order" onClick={props.onTrade}>CONFIRM {props.side}</button></div>
       {props.side === "SHORT" ? <p className="short-warning"><b>SHORT POSITION</b> · Losses can exceed initial collateral. Maintenance margin {(meta.maintenanceMarginRequirement * 100).toFixed(0)}%.</p> : null}
-      <button className="next-round" disabled={props.revealActive} onClick={props.onNext}>NEXT ROUND →</button>
+      <button className="next-round" disabled={props.revealActive} onClick={props.onNext}>END ROUND</button>
     </section>
     {historyOpen?<section className="decision-history" role="dialog" aria-modal="true" aria-label="Decision History"><header><div><span>MARKET MEMORY</span><h2>DECISION HISTORY</h2></div><button onClick={()=>setHistoryOpen(false)}>CLOSE</button></header><nav aria-label="Decision filters">{(["ALL","BUY","SELL","SHORT","COVER","HOLD"] as const).map(value=><button aria-pressed={decisionFilter===value} onClick={()=>setDecisionFilter(value)} key={value}>{value}</button>)}<select aria-label="Filter by asset" value={assetFilter} onChange={event=>setAssetFilter(event.target.value)}><option value="ALL">ALL ASSETS</option>{assets.map(item=><option value={item.id} key={item.id}>{item.symbol}</option>)}</select></nav><div className="decision-timeline">{filteredDecisions.length?filteredDecisions.map(decision=>{const outcome=latestOutcome(game,decision.id);return<article key={decision.id}><time>{date(decision.gameDate)} · ROUND {decision.roundNumber}</time><h3>{decision.type}{decision.assetId?` · ${decision.assetId.toUpperCase()}`:""}</h3><div className="decision-facts"><span><small>AMOUNT</small><b>{decision.amount?money.format(decision.amount):"NO TRADE"}</b></span><span><small>ENTRY</small><b>{decision.price?.toFixed(2)??"—"}</b></span><span><small>STATUS</small><b>{outcome.status}</b></span><span><small>NET OUTCOME</small><b className={(outcome.netPnL??0)>=0?"positive":"negative"}>{signed(outcome.netPnL??0)}</b></span></div><p><b>WHY</b> · {decision.reasonText??decision.reason?.replaceAll("_"," ")??"No reason recorded"}</p><p><b>AT THE TIME</b> · {decision.marketContext.marketHeat} · {decision.strategyContext} · Capital {money.format(decision.portfolioBefore.portfolioValue)}</p><small>{outcome.roundsElapsed} rounds · Costs {money.format((outcome.fees??0)+(outcome.borrowFees??0))} · {decision.status}</small></article>}):<p className="history-empty"><b>NO DECISIONS YET</b><br/>Your investment story begins with a trade or a deliberate hold.</p>}</div></section>:null}    {props.overlay}
   </main>;

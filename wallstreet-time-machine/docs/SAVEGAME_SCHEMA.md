@@ -1,5 +1,7 @@
 # Savegame Schema
 
+The Opening / Closing Bell Experience adds the optional top-level `roundExperience` state to archive version 3. It stores the current session phase (`PRE_MARKET`, `OPENING`, `TRADING`, `CLOSING`, `SUMMARY`, or `OVERNIGHT`), the processed round guard, and the immutable closing snapshot used by summary and overnight screens. Reloading therefore resumes the exact session without advancing the market or reprocessing rivals, information expiry, XP, or rewards. Older active v3 episodes migrate to `TRADING`; saves without an active episode use `null`.
+
 Sprint 5.6 adds episode-local `decisionHistory`, `decisionOutcomes`, `assetPriceHistory`, and `roundHistory`. Migration initializes missing collections and seeds only the current known simulated price; it never invents prior HOLD decisions.
 
 Sprint 5 keeps archive version 3 and adds `historicalDatasetVersion`, short positions, borrow fees, margin state, margin calls, forced-cover counters, and advanced exposure limits. Migration supplies safe zero-value defaults and preserves prior cash, long positions, trades, and identity data.

@@ -1,5 +1,7 @@
 # Savegame Schema
 
+The Employees & Leadership Foundation adds `workforce` to the additive V3 archive. It stores hired employees, their compact skills, salary obligation, loyalty, reputation, location/division assignment, management responsibility, and status. Candidate pools remain deterministic registry data. Older saves receive an empty workforce, so existing divisions continue without a staffing penalty; malformed or duplicate employee/manager records fall back safely.
+
 The Financial House Foundation adds `financialHouse` to the additive V3 archive. It stores the house identity, New York headquarters reference, founded year, independent house level, prestige, global division instances, and local division assignments. Existing saves derive a default house name from the investor name and receive active Level 1 Trading assigned to New York. Zod rejects malformed names, levels, duplicate divisions, duplicate assignments, assignments to unopened divisions, and divisions opened before their historical availability.
 
 The Global Expansion Foundation adds `expansionState` to the additive V3 archive. New and migrated careers use New York as their headquarters and start without branches. Each branch stores a unique financial-center ID, active status, level, opening round and year, and future upgrade IDs. Invalid or duplicate branch records fall back to the safe initial expansion state during migration.

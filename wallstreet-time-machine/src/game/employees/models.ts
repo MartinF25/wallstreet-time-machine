@@ -1,0 +1,7 @@
+import type{FinancialCenterId,BranchModifier}from"../expansion/models";import type{DivisionId,FinancialHouse}from"../financial-house/models";
+export type EmployeeRoleId="TRADER"|"ANALYST"|"RESEARCHER"|"BANKER"|"BROKER"|"RELATIONSHIP_MANAGER"|"DIVISION_MANAGER"|"BRANCH_MANAGER"|"EXECUTIVE"|"COMMODITY_SPECIALIST"|"FX_SPECIALIST";export type EmployeeSeniority="JUNIOR"|"ASSOCIATE"|"SENIOR"|"DIRECTOR"|"PARTNER";export type EmployeeStatus="AVAILABLE"|"EMPLOYED"|"ASSIGNED"|"MANAGER"|"INACTIVE";export type EmployeeTrait="DISCIPLINED"|"AGGRESSIVE"|"WELL_CONNECTED"|"ANALYTICAL"|"LOYAL"|"AMBITIOUS"|"CRISIS_TESTED";
+export interface EmployeeSkills{trading:number;research:number;network:number;leadership:number;dealmaking:number}
+export interface Employee{id:string;name:string;role:EmployeeRoleId;seniority:EmployeeSeniority;skills:EmployeeSkills;salary:number;signingCost:number;loyalty:number;reputation:number;traits:EmployeeTrait[];homeCenterId:FinancialCenterId;assignedCenterId?:FinancialCenterId;assignedDivisionId?:DivisionId;managerOfDivisionId?:DivisionId;status:EmployeeStatus;availableFromYear:number}
+export interface WorkforceState{employees:Employee[]}
+export interface HiringContext{year:number;cash:number;seed:number;centerId:FinancialCenterId;characterReputation:number;characterNetwork:number;house:FinancialHouse;activeBranches:FinancialCenterId[]}
+export interface EmployeeModifier extends BranchModifier{employeeId:string}

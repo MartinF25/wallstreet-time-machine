@@ -1,6 +1,8 @@
 # Savegame Schema
 
-The Office / Headquarters Foundation adds `officeState` to the additive V3 archive. It stores the office level, unlocked zone IDs, and future upgrade IDs. Existing V3 saves migrate to a Level 1 Broker Office with Desk, Market Board, Newspaper, Telephone, Research, and Character zones unlocked; Global Expansion and Deals remain locked.
+The Global Expansion Foundation adds `expansionState` to the additive V3 archive. New and migrated careers use New York as their headquarters and start without branches. Each branch stores a unique financial-center ID, active status, level, opening round and year, and future upgrade IDs. Invalid or duplicate branch records fall back to the safe initial expansion state during migration.
+
+The Office / Headquarters Foundation adds `officeState` to the additive V3 archive. It stores the office level, unlocked zone IDs, and future upgrade IDs. Existing V3 saves migrate to a Level 1 Broker Office with Desk, Market Board, Newspaper, Telephone, Research, Character, and World Map zones unlocked; branch eligibility remains governed by the expansion requirements and Deals remain locked.
 
 The Opening / Closing Bell Experience adds the optional top-level `roundExperience` state to archive version 3. It stores the current session phase (`PRE_MARKET`, `OPENING`, `TRADING`, `CLOSING`, `SUMMARY`, or `OVERNIGHT`), the processed round guard, and the immutable closing snapshot used by summary and overnight screens. Reloading therefore resumes the exact session without advancing the market or reprocessing rivals, information expiry, XP, or rewards. Older active v3 episodes migrate to `TRADING`; saves without an active episode use `null`.
 

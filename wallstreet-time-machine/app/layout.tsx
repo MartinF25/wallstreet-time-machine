@@ -18,6 +18,7 @@ import "./information-rumor.css";
 import "./rivals.css";
 import "./round-experience.css";
 import "./office.css";
+import "./expansion.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -15,7 +15,7 @@ export const OFFICE_ZONES:OfficeZoneDefinition[]=[
  {id:"TELEPHONE",label:"Contacts & Rivals",objectLabel:"TELEPHONE",description:"Observe contacts, rival investors and visible activity.",target:"RIVALS",unlockLevel:1},
  {id:"RESEARCH",label:"Research Area",objectLabel:"BOOKS & REPORTS",description:"Open the Information Desk and investigate sources.",target:"INFORMATION",unlockLevel:1},
  {id:"CHARACTER",label:"Investor Status",objectLabel:"INVESTOR PORTRAIT",description:"Manage character progression, credits and skills.",target:"PROFILE",unlockLevel:1},
- {id:"WORLD_MAP",label:"Global Expansion",objectLabel:"WORLD MAP",description:"Future branches in London, Frankfurt and other financial centers.",unlockLevel:5},
+ {id:"WORLD_MAP",label:"Global Expansion",objectLabel:"WORLD MAP",description:"Plan branches in international financial centers.",target:"EXPANSION",unlockLevel:1},
  {id:"CONFERENCE_TABLE",label:"Deals & M&A",objectLabel:"CONFERENCE TABLE",description:"Future corporate transactions and investment banking operations.",unlockLevel:4},
 ];
 

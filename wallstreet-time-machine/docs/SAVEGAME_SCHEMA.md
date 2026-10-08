@@ -1,5 +1,7 @@
 # Savegame Schema
 
+The Financial House Foundation adds `financialHouse` to the additive V3 archive. It stores the house identity, New York headquarters reference, founded year, independent house level, prestige, global division instances, and local division assignments. Existing saves derive a default house name from the investor name and receive active Level 1 Trading assigned to New York. Zod rejects malformed names, levels, duplicate divisions, duplicate assignments, assignments to unopened divisions, and divisions opened before their historical availability.
+
 The Global Expansion Foundation adds `expansionState` to the additive V3 archive. New and migrated careers use New York as their headquarters and start without branches. Each branch stores a unique financial-center ID, active status, level, opening round and year, and future upgrade IDs. Invalid or duplicate branch records fall back to the safe initial expansion state during migration.
 
 The Office / Headquarters Foundation adds `officeState` to the additive V3 archive. It stores the office level, unlocked zone IDs, and future upgrade IDs. Existing V3 saves migrate to a Level 1 Broker Office with Desk, Market Board, Newspaper, Telephone, Research, Character, and World Map zones unlocked; branch eligibility remains governed by the expansion requirements and Deals remain locked.

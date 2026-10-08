@@ -19,6 +19,7 @@ import "./rivals.css";
 import "./round-experience.css";
 import "./office.css";
 import "./expansion.css";
+import "./financial-house.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

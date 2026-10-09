@@ -9,3 +9,5 @@
 .last-round{display:grid;gap:4px;margin:12px 0;padding:10px 0;border-block:1px solid var(--hud-line)}.last-round small{color:var(--hud-gold);font-size:.6rem;letter-spacing:.1em}.last-round strong{font-size:1.15rem}.last-round span{color:var(--hud-muted);font-size:.68rem}.decision-history select{background:#11171c;color:var(--hud-cream);border:1px solid var(--hud-line);padding:6px 9px}
 @media(max-width:900px){.memory-strip{grid-template-columns:repeat(3,1fr)}.decision-timeline{grid-template-columns:1fr}}
 @media(max-width:720px){.memory-strip{grid-template-columns:repeat(2,1fr)}.decision-history{inset:0;padding:14px}.decision-history h2{font-size:1.4rem}.decision-facts{grid-template-columns:1fr 1fr}.trade-ticket .reason-select{display:none}}
+
+.trade-dock{grid-template-columns:max-content minmax(0,1fr) max-content}.trade-ticket{overflow-x:auto}.next-round{position:relative;z-index:2;min-width:110px}

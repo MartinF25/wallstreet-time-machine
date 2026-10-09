@@ -1,5 +1,7 @@
 # Savegame Schema
 
+The Deals & Corporate Finance Foundation adds `dealState` to V3. It stores generated opportunities accepted into the archive, active mandates and assigned team IDs, preparation progress, completed/failed outcomes, fee history, and the episode/round processing guard. Older saves receive an empty pipeline. Duplicate or malformed deals, invalid amounts, progress, statuses, roles, and division references are rejected and normalized safely.
+
 The Employees & Leadership Foundation adds `workforce` to the additive V3 archive. It stores hired employees, their compact skills, salary obligation, loyalty, reputation, location/division assignment, management responsibility, and status. Candidate pools remain deterministic registry data. Older saves receive an empty workforce, so existing divisions continue without a staffing penalty; malformed or duplicate employee/manager records fall back safely.
 
 The Financial House Foundation adds `financialHouse` to the additive V3 archive. It stores the house identity, New York headquarters reference, founded year, independent house level, prestige, global division instances, and local division assignments. Existing saves derive a default house name from the investor name and receive active Level 1 Trading assigned to New York. Zod rejects malformed names, levels, duplicate divisions, duplicate assignments, assignments to unopened divisions, and divisions opened before their historical availability.

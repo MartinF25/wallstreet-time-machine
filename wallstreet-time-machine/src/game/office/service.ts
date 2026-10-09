@@ -17,7 +17,7 @@ export const OFFICE_ZONES:OfficeZoneDefinition[]=[
  {id:"CHARACTER",label:"Investor Status",objectLabel:"INVESTOR PORTRAIT",description:"Manage character progression, credits and skills.",target:"PROFILE",unlockLevel:1},
  {id:"WORLD_MAP",label:"Global Expansion",objectLabel:"WORLD MAP",description:"Plan branches in international financial centers.",target:"EXPANSION",unlockLevel:1},
  {id:"FINANCIAL_HOUSE",label:"Financial House",objectLabel:"HOUSE LEDGER",description:"Manage the house identity, divisions and locations.",target:"HOUSE",unlockLevel:1},
- {id:"CONFERENCE_TABLE",label:"Deals & M&A",objectLabel:"CONFERENCE TABLE",description:"Future corporate transactions and investment banking operations.",unlockLevel:4},
+ {id:"CONFERENCE_TABLE",label:"Deal Mandates",objectLabel:"CONFERENCE TABLE",description:"Open the Corporate Finance mandate ledger.",target:"DEALS",unlockLevel:1},
 ];
 
 export const createOfficeState=():OfficeState=>({level:1,unlockedZones:OFFICE_ZONES.filter(x=>x.unlockLevel===1).map(x=>x.id),upgrades:[]});

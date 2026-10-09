@@ -2,7 +2,7 @@ import{describe,expect,it}from"vitest";import{createAppSave,migrateToV3,newCaree
 describe("office headquarters foundation",()=>{
  it("creates a level one broker office",()=>expect(createOfficeState()).toMatchObject({level:1,upgrades:[]}));
  it("unlocks every functional level one zone",()=>{const state=createOfficeState(),required=["DESK","MARKET_BOARD","NEWSPAPER","TELEPHONE","RESEARCH","CHARACTER"];expect(required.every(x=>state.unlockedZones.includes(x as never))).toBe(true)});
- it("opens the expansion map while keeping future deals locked",()=>{const state=createOfficeState();expect(state.unlockedZones).toContain("WORLD_MAP");expect(state.unlockedZones).not.toContain("CONFERENCE_TABLE")});
+ it("exposes expansion and the gated mandate table",()=>{const state=createOfficeState();expect(state.unlockedZones).toContain("WORLD_MAP");expect(state.unlockedZones).toContain("CONFERENCE_TABLE")});
  it("defines all five planned office levels",()=>expect(OFFICE_LEVELS.map(x=>x.name)).toEqual(["Broker Office","Successful Trader Office","Wall Street Firm","Investment House","Global Financial Headquarters"]));
  it("gives unlocked zones existing screen targets",()=>expect(OFFICE_ZONES.filter(x=>x.unlockLevel===1).every(x=>Boolean(x.target))).toBe(true));
  it("uses ledger technology before 1920",()=>expect(getOfficeEraPresentation(1907)).toMatchObject({id:"LEDGER",communicationDevice:expect.stringMatching(/telephone|telegraph/i)}));
